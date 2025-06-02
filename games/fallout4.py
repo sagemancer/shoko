@@ -26,6 +26,11 @@ NPC_IDS = {
     "piper": "00002F1E",
 }
 
+NPC_LIST = list()
+
+for key in NPC_IDS.keys():
+    NPC_LIST.append(key)
+
 # NPC_NAMES = [
 #     "synth", "swan", "father",
 #     "shaun", "sean", "hancock",
@@ -91,7 +96,7 @@ def run_command(console_cmd: str):
 """
 Extra bindings specifically created for Fallout 4
 """
-def custom_fallout4_bindings(phrase, audio_str):
+def custom_fallout4_bindings(audio_str):
     for f4_phrase in F4_PHRASES:
         if f4_phrase in audio_str:
             print(f"{log.APP_STATUS['DETECTED']}: {audio_str}")
@@ -100,33 +105,26 @@ def custom_fallout4_bindings(phrase, audio_str):
             if f4_phrase == "kill":
                 last_resort()
 
-            # TODO: Need test the new "keys()" addition (NPC_NAMES list is ready if this requires too much more processing)
-            if f4_phrase in NPC_IDS.keys():
+            if f4_phrase in NPC_LIST:
                 generate_npc(f4_phrase)
 
             # Randomly spawn an NPC
             if f4_phrase == "random":
-                # TODO: Need test the new "keys()" addition (NPC_NAMES list is ready if this requires too much more processing)
-                npc = random.choice(NPC_IDS.keys())
+                npc = random.choice(NPC_LIST)
                 generate_npc(npc)
 
             if f4_phrase == "attack":
-                with pyautogui.mouseDown(button="right"):
-                    pyautogui.mouseDown(button="left")
-                    time.sleep(3) # Set to 3 so if you currently have an auto weapon, it'll shoot more than 1 round
-                    pyautogui.mouseUp(button="left")
-
+                pyautogui.mouseDown(button="right")
+                pyautogui.mouseDown(button="left")
+                time.sleep(3) # Set to 3 so if you currently have an auto weapon, it'll shoot more than 1 round
+                pyautogui.mouseUp(button="left")
                 pyautogui.mouseUp(button="right")
 
             # Primary actions for doing in-game mechanics
-            if f4_phrase in ["reload", "inventory", "interact", "skip"]:
-                pyautogui.keyDown(bindings.FALLOUT4_BINDINGS[f4_phrase])
-                pyautogui.keyUp(bindings.FALLOUT4_BINDINGS[f4_phrase])
+            if f4_phrase in ["reload", "inventory", "interact"]:
+                pyautogui.keyDown(bindings.PC_BINDINGS[f4_phrase])
+                pyautogui.keyUp(bindings.PC_BINDINGS[f4_phrase])
 
-        if not f4_phrase:
-            # Custom movement for Fallout 4 to prevent getting stuck too often
-            pyautogui.keyDown(bindings.PC_BINDINGS[phrase])
-            pyautogui.keyDown(bindings.PC_BINDINGS["jump"])
-            pyautogui.keyUp(bindings.PC_BINDINGS["jump"])
-            time.sleep(5)
-            pyautogui.keyUp(bindings.PC_BINDINGS[phrase])
+            if f4_phrase == "skip":
+                pyautogui.keyDown(bindings.PC_BINDINGS['skip_f4'])
+                pyautogui.keyUp(bindings.PC_BINDINGS['skip_f4'])

@@ -7,4 +7,5 @@ APP_STATUS = {
     "NOT DETECTED": "🟡 [NOT DETECTED]",
     "DETECTED": "🟢 [DETECTED]",
     "PROCESSING": "🟡 [PROCESSING]",
+    "TRY AGAIN": "🟡 [TRY AGAIN]",
 }
