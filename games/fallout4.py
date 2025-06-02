@@ -111,9 +111,12 @@ def custom_fallout4_bindings(phrase, audio_str):
                 generate_npc(npc)
 
             if f4_phrase == "attack":
-                pyautogui.mouseDown(button="left")
-                time.sleep(3) # Set to 3 so if you currently have an auto weapon, it'll shoot more than 1 round
-                pyautogui.mouseUp(button="left")
+                with pyautogui.mouseDown(button="right"):
+                    pyautogui.mouseDown(button="left")
+                    time.sleep(3) # Set to 3 so if you currently have an auto weapon, it'll shoot more than 1 round
+                    pyautogui.mouseUp(button="left")
+
+                pyautogui.mouseUp(button="right")
 
             # Primary actions for doing in-game mechanics
             if f4_phrase in ["reload", "inventory", "interact", "skip"]:

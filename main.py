@@ -6,6 +6,7 @@ import time
 import utils.bindings as bindings
 import utils.logging as log
 import games.fallout4 as f4
+import games.re3r as re3r
 
 # A list of all supported games with custom bindings and tested
 # If this list grows too large, it will most likely need to be restructured
@@ -50,6 +51,8 @@ def main():
                     if set_game:
                         if set_game in ["Fallout4", "Fallout 4"]:
                             f4.custom_fallout4_bindings(phrase, audio_str)
+                        elif set_game in ["Resident Evil 3", "RE3", "Resident Evil 3 Remake"]:
+                            re3r.custom_re3r_bindings(phrase, audio_str)
                     else:
                         pyautogui.keyDown(bindings.PC_BINDINGS[phrase])
                         time.sleep(5)
